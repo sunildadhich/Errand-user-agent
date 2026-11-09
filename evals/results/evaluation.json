@@ -229,5 +229,12 @@
     "actual_result": "behavioral assertions passed",
     "pass_fail": "PASS",
     "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S34",
+    "expected_result": "Restart after provider success reconciles pending attempt",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
   }
 ]

@@ -1,18 +1,18 @@
 {
-  "conversation_id": "c_6f4e1cd842",
+  "conversation_id": "c_428988c796",
   "scenario": "timeout_booked",
   "events": [
     {
-      "run_id": "run_716d1973ec",
+      "run_id": "run_ff840a1d04",
       "event": "state_loaded",
       "payload": {
-        "conversation_id": "c_6f4e1cd842",
+        "conversation_id": "c_428988c796",
         "state": "collecting"
       },
-      "created_at": "2026-11-09T14:45:49.199452"
+      "created_at": "2026-11-09T14:51:36.054957"
     },
     {
-      "run_id": "run_716d1973ec",
+      "run_id": "run_ff840a1d04",
       "event": "model_call",
       "payload": {
         "context": {
@@ -33,10 +33,10 @@
         "latency_ms": 0.01,
         "estimated_cost": null
       },
-      "created_at": "2026-11-09T14:45:49.200482"
+      "created_at": "2026-11-09T14:51:36.056051"
     },
     {
-      "run_id": "run_716d1973ec",
+      "run_id": "run_ff840a1d04",
       "event": "facts_updated",
       "payload": {
         "keys": [
@@ -47,10 +47,10 @@
           "time_window"
         ]
       },
-      "created_at": "2026-11-09T14:45:49.201039"
+      "created_at": "2026-11-09T14:51:36.056565"
     },
     {
-      "run_id": "run_716d1973ec",
+      "run_id": "run_ff840a1d04",
       "event": "tool_call",
       "payload": {
         "tool": "search_providers",
@@ -122,63 +122,65 @@
         "error": null,
         "latency_ms": 0.01
       },
-      "created_at": "2026-11-09T14:45:49.201151"
+      "created_at": "2026-11-09T14:51:36.056674"
     },
     {
-      "run_id": "run_716d1973ec",
+      "run_id": "run_ff840a1d04",
       "event": "tool_call",
       "payload": {
         "tool": "hold_slot",
         "arguments": {
           "provider_id": "p103",
-          "slot": "09:00"
+          "slot": "09:00",
+          "date_range": "this week"
         },
         "result": {
-          "hold_id": "h_e4d66e2954",
-          "expires_at": "2026-11-09T14:55:49.201214+00:00",
+          "hold_id": "h_06a0f76dfc",
+          "expires_at": "2026-11-09T15:01:36.056731+00:00",
           "quoted_price": 1400
         },
         "error": null,
-        "latency_ms": 0.37
+        "latency_ms": 0.34
       },
-      "created_at": "2026-11-09T14:45:49.201626"
+      "created_at": "2026-11-09T14:51:36.057112"
     },
     {
-      "run_id": "run_716d1973ec",
+      "run_id": "run_ff840a1d04",
       "event": "state_transition",
       "payload": {
-        "conversation_id": "c_6f4e1cd842",
+        "conversation_id": "c_428988c796",
         "from": "collecting",
         "to": "awaiting_approval",
         "reason": "booking_approval_requested"
       },
-      "created_at": "2026-11-09T14:45:49.202611"
+      "created_at": "2026-11-09T14:51:36.058034"
     },
     {
-      "run_id": "run_716d1973ec",
+      "run_id": "run_ff840a1d04",
       "event": "approval_requested",
       "payload": {
-        "approval_id": "ap_d4961fa55440",
+        "approval_id": "ap_55ffced7e904",
         "details": {
           "provider_id": "p103",
           "slot": "09:00",
+          "date_range": "this week",
           "price": 1400,
           "service": "plumber"
         }
       },
-      "created_at": "2026-11-09T14:45:49.202798"
+      "created_at": "2026-11-09T14:51:36.058220"
     },
     {
-      "run_id": "run_19cfc4ac41",
+      "run_id": "run_2c034cba3c",
       "event": "state_loaded",
       "payload": {
-        "conversation_id": "c_6f4e1cd842",
+        "conversation_id": "c_428988c796",
         "state": "awaiting_approval"
       },
-      "created_at": "2026-11-09T14:45:49.203133"
+      "created_at": "2026-11-09T14:51:36.058534"
     },
     {
-      "run_id": "run_19cfc4ac41",
+      "run_id": "run_2c034cba3c",
       "event": "model_call",
       "payload": {
         "context": {
@@ -199,10 +201,10 @@
         "latency_ms": 0.01,
         "estimated_cost": null
       },
-      "created_at": "2026-11-09T14:45:49.203599"
+      "created_at": "2026-11-09T14:51:36.058974"
     },
     {
-      "run_id": "run_19cfc4ac41",
+      "run_id": "run_2c034cba3c",
       "event": "facts_updated",
       "payload": {
         "keys": [
@@ -215,54 +217,55 @@
           "time_window"
         ]
       },
-      "created_at": "2026-11-09T14:45:49.204110"
+      "created_at": "2026-11-09T14:51:36.059326"
     },
     {
-      "run_id": "run_19cfc4ac41",
+      "run_id": "run_2c034cba3c",
       "event": "tool_call",
       "payload": {
         "tool": "book",
         "arguments": {
-          "hold_id": "h_e4d66e2954",
-          "idempotency_key": "ap_d4961fa55440"
+          "hold_id": "h_06a0f76dfc",
+          "idempotency_key": "ap_55ffced7e904"
         },
         "result": null,
         "error": "timeout_after_success",
-        "latency_ms": 0.46
+        "latency_ms": 0.51
       },
-      "created_at": "2026-11-09T14:45:49.205716"
+      "created_at": "2026-11-09T14:51:36.060904"
     },
     {
-      "run_id": "run_19cfc4ac41",
+      "run_id": "run_2c034cba3c",
       "event": "tool_call",
       "payload": {
         "tool": "get_booking_status",
         "arguments": {
-          "hold_id": "h_e4d66e2954",
-          "idempotency_key": "ap_d4961fa55440"
+          "hold_id": "h_06a0f76dfc",
+          "idempotency_key": "ap_55ffced7e904"
         },
         "result": {
           "status": "confirmed",
-          "booking_id": "b_f5d1b902cd",
+          "booking_id": "b_ff7c753619",
           "provider_id": "p103",
           "slot": "09:00",
+          "date_range": "this week",
           "price": 1400
         },
         "error": null,
-        "latency_ms": 0.09
+        "latency_ms": 0.07
       },
-      "created_at": "2026-11-09T14:45:49.205904"
+      "created_at": "2026-11-09T14:51:36.061377"
     },
     {
-      "run_id": "run_19cfc4ac41",
+      "run_id": "run_2c034cba3c",
       "event": "state_transition",
       "payload": {
-        "conversation_id": "c_6f4e1cd842",
+        "conversation_id": "c_428988c796",
         "from": "awaiting_approval",
         "to": "booked",
         "reason": "timeout_recovery_confirmed"
       },
-      "created_at": "2026-11-09T14:45:49.206406"
+      "created_at": "2026-11-09T14:51:36.061845"
     }
   ]
 }

@@ -43,3 +43,13 @@ def test_default_outcome_distribution_is_reproducible():
     assert abs(first["slot_taken"] / 10000 - .15) < .02
     assert abs((first["timeout_booked"] + first["timeout_not_booked"]) / 10000 - .15) < .02
     assert abs(first["timeout_booked"] - first["timeout_not_booked"]) < 200
+
+
+def test_seeded_outcome_sequence_continues_across_tool_instances(db):
+    outcomes = [MockErrandTools(Scenario(seed=7), db=db)._booking_mode() for _ in range(1000)]
+    counts = {mode: outcomes.count(mode) for mode in ("success", "slot_taken", "timeout_booked", "timeout_not_booked")}
+    assert all(counts.values())
+    assert abs(counts["success"] / 1000 - .70) < .04
+    assert abs(counts["slot_taken"] / 1000 - .15) < .04
+    assert abs((counts["timeout_booked"] + counts["timeout_not_booked"]) / 1000 - .15) < .04
+    assert abs(counts["timeout_booked"] - counts["timeout_not_booked"]) < 40

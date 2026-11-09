@@ -163,5 +163,10 @@
     "id": "S33",
     "name": "Unconfirmed inferred preference is stored but inactive",
     "expected": "Unconfirmed inferred preference is stored but inactive"
+  },
+  {
+    "id": "S34",
+    "name": "Restart after provider success reconciles pending attempt",
+    "expected": "Restart after provider success reconciles pending attempt"
   }
 ]

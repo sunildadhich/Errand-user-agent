@@ -61,7 +61,7 @@ MODEL_PROVIDER=scripted pytest -q
 MODEL_PROVIDER=scripted python evals/run_evaluation.py
 ```
 
-The suite covers 33 acceptance scenarios with 74 individual test cases. The evaluation command runs those same behavioral checks and writes:
+The suite covers 34 acceptance scenarios and 77 individual test cases. The evaluation command runs those same behavioral checks and writes:
 
 - `evals/results/evaluation.csv`
 - `evals/results/evaluation.json`

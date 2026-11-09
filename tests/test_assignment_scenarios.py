@@ -91,7 +91,8 @@ def test_05_07_changed_details_invalidate_approval(field, value):
 def test_08_booking_without_approval():
     _, db, tools, agent = setup_agent()
     cid, _, state, _ = start_booking(agent)
-    assert state == "awaiting_approval" and len(tools.bookings) == 0
+    assert state == "awaiting_approval" and len(tools._records("booking")) == 0
+    assert db.get(Conversation, cid).facts["pending_action"]["details"]["date_range"] == "this week"
 
 
 def test_09_repeated_confirmation_is_idempotent():
@@ -350,6 +351,26 @@ def test_33_unconfirmed_inferred_preference_is_saved_but_inactive():
     assert "preferences" not in context["facts"] and context["memories"] == []
 
 
+def test_34_restart_after_provider_success_reconciles_pending_attempt():
+    engine, db, tools, agent = setup_agent()
+    cid, _, _, _ = start_booking(agent)
+    conversation = db.get(Conversation, cid)
+    pending = conversation.facts["pending_action"]
+    approval = db.get(Approval, pending["approval_id"])
+    approval.approved, approval.consumed = True, True
+    db.add(BookingAttempt(user_id="sam", hold_id=pending["hold_id"],
+                          idempotency_key=pending["approval_id"], status="pending"))
+    db.commit()
+    provider_result = tools.book(pending["hold_id"], pending["approval_id"])
+    db.close()
+    restarted_db = sessionmaker(bind=engine)()
+    restarted_tools = MockErrandTools(db=restarted_db)
+    restarted = ErrandAgent(restarted_db, tools=restarted_tools, model=ScriptedModel())
+    cid, reply, state, data = restarted.handle("sam", "yes", cid)
+    assert state == "booked" and data["booking_id"] == provider_result["booking_id"]
+    assert len(restarted_tools._records("booking")) == 1
+
+
 SCENARIOS = [
     ("S01", "Missing details and multi-message conversation", test_01_missing_information_multi_message),
     ("S02", "Correction preserves context", test_02_correction_preserves_unrelated_context),
@@ -384,6 +405,7 @@ SCENARIOS = [
     ("S31", "Existing SQLite database schema migrates", test_31_existing_sqlite_memory_table_is_migrated),
     ("S32", "User can select a provider from comparison", test_32_user_can_select_a_compared_provider),
     ("S33", "Unconfirmed inferred preference is stored but inactive", test_33_unconfirmed_inferred_preference_is_saved_but_inactive),
+    ("S34", "Restart after provider success reconciles pending attempt", test_34_restart_after_provider_success_reconciles_pending_attempt),
 ]
 
 

@@ -49,6 +49,10 @@ class ErrandAgent:
             if not conversation:
                 conversation = self.db.query(Conversation).filter_by(user_id=user_id).order_by(Conversation.updated_at.desc()).first()
             cid = conversation.id if conversation else ""
+            if isinstance(exc, ToolError) and exc.code == "tool_limit":
+                return cid, "I reached the tool-call limit before finishing. Please try a shorter request.", "limited", {}
+            if self._expired():
+                return cid, "I hit the time limit before finishing. Please try again.", "limited", {}
             return cid, "I hit an unexpected issue while handling that. I haven't reported any unverified action as complete. Please check the latest status before trying again.", "error", {}
 
     def _handle(self, user_id: str, message: str, conversation_id=None):
@@ -163,10 +167,12 @@ class ErrandAgent:
         if self._at_tool_limit():
             return conversation.id, "I reached the tool-call limit before I could hold a slot. Please try again.", "limited", {}
         try:
-            hold = self._tool("hold_slot", {"provider_id": chosen["id"], "slot": slot}, lambda: self.tools.hold_slot(chosen["id"], slot))
+            hold = self._tool("hold_slot", {"provider_id": chosen["id"], "slot": slot, "date_range": state.date_range},
+                              lambda: self.tools.hold_slot(chosen["id"], slot, state.date_range))
         except ToolError as exc:
             return conversation.id, f"I couldn’t hold that slot ({exc.code}). No booking was made.", "error", {}
-        details = {"provider_id": chosen["id"], "slot": slot, "price": hold["quoted_price"], "service": state.service}
+        details = {"provider_id": chosen["id"], "slot": slot, "date_range": state.date_range,
+                   "price": hold["quoted_price"], "service": state.service}
         approval = self.approvals.create(self.db, user_id, "book", details)
         facts["pending_action"] = {"type": "book", "details": details, "approval_id": approval.id,
                                    "hold_id": hold["hold_id"], "provider_name": chosen["name"]}
@@ -193,8 +199,7 @@ class ErrandAgent:
             # Reviews are shown as quoted, untrusted text and never included in model context.
             return (f"{details['name']} is rated {details['rating']}★. Attributes: {', '.join(details['attributes'])}. Reviews (unverified): “{details['reviews'][0]}”", conversation.state, details)
         if lower in {"list bookings", "show bookings", "my bookings"}:
-            bookings = self.tools.list_bookings(user_id)
-            self._tool_trace("list_bookings", {"user_id": user_id}, {"count": len(bookings)})
+            bookings = self._tool("list_bookings", {"user_id": user_id}, lambda: self.tools.list_bookings(user_id))
             return (str(bookings) if bookings else "You don’t have any active bookings.", conversation.state, {"bookings": bookings})
         if lower.startswith("cancel") or lower.startswith("reschedule") or lower.startswith("move it"):
             attempts = self.db.query(BookingAttempt).filter_by(user_id=user_id, status="confirmed").order_by(BookingAttempt.id.desc()).all()
@@ -230,17 +235,19 @@ class ErrandAgent:
             if attempt and attempt.status == "confirmed":
                 self._transition(conversation, "booked", "booking_already_confirmed")
                 return conversation.id, f"This booking is already confirmed. Reference: {attempt.booking_id}.", "booked", {"booking_id": attempt.booking_id}
-            if attempt and attempt.status == "unknown":
+            if attempt and attempt.status in {"pending", "unknown"}:
                 status = self._tool("get_booking_status", {"hold_id": pending["hold_id"], "idempotency_key": pending["approval_id"]}, lambda: self.tools.get_booking_status(pending["hold_id"], pending["approval_id"]))
                 if status["status"] == "confirmed":
                     attempt.status, attempt.booking_id = "confirmed", status["booking_id"]
                     self._transition(conversation, "booked", "timeout_recovery_confirmed")
                     self.db.commit()
                     return conversation.id, f"I verified that the booking completed. Reference: {status['booking_id']}.", "booked", status
+                attempt.status = "unknown"
+                self.db.commit()
                 old_hold = self.tools._get(pending["hold_id"])
                 if old_hold:
                     provider_id, slot, price = old_hold["provider_id"], old_hold["slot"], old_hold["price"]
-                    new_hold = self.tools.hold_slot(provider_id, slot)
+                    new_hold = self.tools.hold_slot(provider_id, slot, old_hold.get("date_range"))
                     details = {**details, "price": new_hold["quoted_price"]}
                     approval = self.approvals.create(self.db, user_id, "book", details)
                     facts["pending_action"] = {**pending, "details": details, "approval_id": approval.id,
@@ -268,13 +275,14 @@ class ErrandAgent:
                 return conversation.id, f"You’re booked! Reference: {result['booking_id']}.", "booked", result
             except ToolError as exc:
                 if exc.code.startswith("timeout"):
+                    attempt.status = "unknown"
+                    self.db.commit()
                     status = self._tool("get_booking_status", {"hold_id": pending["hold_id"], "idempotency_key": pending["approval_id"]}, lambda: self.tools.get_booking_status(pending["hold_id"], pending["approval_id"]))
                     if status["status"] == "confirmed":
                         attempt.status, attempt.booking_id = "confirmed", status["booking_id"]
                         self._transition(conversation, "booked", "timeout_recovery_confirmed")
                         self.db.commit()
                         return conversation.id, f"You’re booked. The provider confirmed after a delay. Reference: {status['booking_id']}.", "booked", status
-                    attempt.status = "unknown"
                     self._transition(conversation, "uncertain", "booking_timeout_unresolved")
                     self.db.commit()
                     return conversation.id, "The request timed out and the provider reports no booking yet. I haven’t retried. Ask me to check its status before we proceed.", "uncertain", {}
@@ -291,6 +299,9 @@ class ErrandAgent:
                     return conversation.id, f"I couldn’t cancel the booking ({exc.code}).", "error", {}
                 result = self._tool("cancel", {"booking_id": pending["booking_id"], "idempotency_key": pending["approval_id"], "retry": True}, lambda: self.tools.cancel(pending["booking_id"], pending["approval_id"]))
             self._transition(conversation, "cancelled", "cancellation_confirmed")
+            attempt = self.db.query(BookingAttempt).filter_by(user_id=user_id, booking_id=pending["booking_id"]).first()
+            if attempt:
+                attempt.status = "cancelled"
             self.db.commit()
             return conversation.id, "Your booking has been cancelled.", "cancelled", result
         if action == "reschedule":
@@ -315,9 +326,9 @@ class ErrandAgent:
             self.db.commit()
             return "A provider cancelled a booking, but I couldn’t match it to your account. No replacement was booked."
         original = self.tools._get(booking_id)
-        event.handled = True
         original["status"] = "provider_cancelled"
         self.tools._put(booking_id, "booking", original)
+        attempt.status = "provider_cancelled"
         self.db.commit()
         conversation = self.db.query(Conversation).filter_by(user_id=user_id).order_by(Conversation.updated_at.desc()).first()
         prior_facts = (conversation.facts or {}) if conversation else {}
@@ -325,7 +336,8 @@ class ErrandAgent:
         area = prior_facts.get("area", "your area")
         date_range = prior_facts.get("date_range", "the original date")
         facts = {"service": service, "area": area, "date_range": date_range, "time_window": original.get("slot")}
-        options = self.tools.search_providers(service, area, date_range)
+        options = self._tool("search_providers", {"service": service, "area": area, "date_range": date_range},
+                             lambda: self.tools.search_providers(service, area, date_range))
         budget = prior_facts.get("budget")
         if budget is None:
             budget_memory = next((m["value"] for m in self.memory.get_relevant(self.db, user_id, ["budget"])), None)
@@ -342,8 +354,10 @@ class ErrandAgent:
                 -p["rating"], p["price"]))[0]
             slot = self._pick_slot(chosen["available_slots"], facts["time_window"])
             if slot:
-                hold = self.tools.hold_slot(chosen["id"], slot)
-                details = {"provider_id": chosen["id"], "slot": slot, "price": hold["quoted_price"], "service": service}
+                hold = self._tool("hold_slot", {"provider_id": chosen["id"], "slot": slot, "date_range": date_range},
+                                  lambda: self.tools.hold_slot(chosen["id"], slot, date_range))
+                details = {"provider_id": chosen["id"], "slot": slot, "date_range": date_range,
+                           "price": hold["quoted_price"], "service": service}
                 approval = self.approvals.create(self.db, user_id, "book", details)
                 if conversation:
                     conversation.facts = {**(conversation.facts or {}), "pending_action": {
@@ -351,8 +365,12 @@ class ErrandAgent:
                         "hold_id": hold["hold_id"], "provider_name": chosen["name"], "rebooking_for": booking_id}}
                     self._transition(conversation, "awaiting_approval", "replacement_approval_requested")
                     self.db.commit()
+                event.handled = True
+                self.db.commit()
                 return (f"Your provider cancelled the booking. I found {chosen['name']} for {slot} at ₹{hold['quoted_price']}. "
                         "Would you like me to book this replacement? I’ll wait for your fresh approval.")
+        event.handled = True
+        self.db.commit()
         return "Your provider cancelled the booking. I couldn’t find a suitable replacement, so no new booking was made."
 
     def _model_context(self, user_id, message, facts):

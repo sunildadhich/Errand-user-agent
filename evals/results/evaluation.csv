@@ -32,3 +32,4 @@ S30,Non-confirmation text cannot approve,behavioral assertions passed,PASS,Behav
 S31,Existing SQLite database schema migrates,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
 S32,User can select a provider from comparison,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
 S33,Unconfirmed inferred preference is stored but inactive,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S34,Restart after provider success reconciles pending attempt,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
