@@ -371,6 +371,17 @@ def test_34_restart_after_provider_success_reconciles_pending_attempt():
     assert len(restarted_tools._records("booking")) == 1
 
 
+def test_35_execution_time_limit_is_clear():
+    _, db, _, agent = setup_agent()
+    original = config.settings.max_run_seconds
+    config.settings.max_run_seconds = -1
+    try:
+        _, reply, state, _ = agent.handle("sam", "Find a plumber")
+        assert state == "limited" and "limit" in reply.lower()
+    finally:
+        config.settings.max_run_seconds = original
+
+
 SCENARIOS = [
     ("S01", "Missing details and multi-message conversation", test_01_missing_information_multi_message),
     ("S02", "Correction preserves context", test_02_correction_preserves_unrelated_context),
@@ -406,6 +417,7 @@ SCENARIOS = [
     ("S32", "User can select a provider from comparison", test_32_user_can_select_a_compared_provider),
     ("S33", "Unconfirmed inferred preference is stored but inactive", test_33_unconfirmed_inferred_preference_is_saved_but_inactive),
     ("S34", "Restart after provider success reconciles pending attempt", test_34_restart_after_provider_success_reconciles_pending_attempt),
+    ("S35", "Execution time limit is enforced", test_35_execution_time_limit_is_clear),
 ]
 
 

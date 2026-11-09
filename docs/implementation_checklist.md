@@ -8,7 +8,7 @@ Status is updated only after implementation and verification.
 - [x] **2. Durable mock tools and recovery:** persist provider holds and transactions in SQLite; configure seeded failure scenarios; implement authoritative status checks and safe retries for all required tools.
 - [x] **3. Policy, memory and proactive events:** exact-action approvals for every consequential action; explicit/inferred memories with inspect, correct and forget; seeded evaluation memory; provider cancellation notification and fresh replacement approval.
 - [x] **4. Limits, context and traces:** relevant context under a fixed token budget; log exact model context; enforce model/tool/time limits; structured sanitized traces with latency and token/cost estimates where available.
-- [x] **5. Evaluation and regression tests:** 34 deterministic behavioral scenarios; assert safety and persistence invariants; generate CSV and JSON reports and a raw timeout-after-success trace.
+- [x] **5. Evaluation and regression tests:** 35 deterministic behavioral scenarios; assert safety and persistence invariants; generate CSV and JSON reports and a raw timeout-after-success trace.
 - [x] **6. Demo and project deliverables:** usable side-by-side Streamlit chat/trace view; concise design note with annotated trace; three verified bug records; truthful assistant transcript; complete README and committed Git repository.
 - [x] **7. Final verification:** full test suite, offline evaluation, Ollama integration, process-restart recovery, approval/memory invariants, and local run instructions verified.
 

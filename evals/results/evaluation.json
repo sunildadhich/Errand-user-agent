@@ -236,5 +236,12 @@
     "actual_result": "behavioral assertions passed",
     "pass_fail": "PASS",
     "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S35",
+    "expected_result": "Execution time limit is enforced",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
   }
 ]

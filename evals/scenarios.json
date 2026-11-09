@@ -168,5 +168,10 @@
     "id": "S34",
     "name": "Restart after provider success reconciles pending attempt",
     "expected": "Restart after provider success reconciles pending attempt"
+  },
+  {
+    "id": "S35",
+    "name": "Execution time limit is enforced",
+    "expected": "Execution time limit is enforced"
   }
 ]
