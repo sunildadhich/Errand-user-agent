@@ -1,0 +1,268 @@
+{
+  "conversation_id": "c_6f4e1cd842",
+  "scenario": "timeout_booked",
+  "events": [
+    {
+      "run_id": "run_716d1973ec",
+      "event": "state_loaded",
+      "payload": {
+        "conversation_id": "c_6f4e1cd842",
+        "state": "collecting"
+      },
+      "created_at": "2026-11-09T14:45:49.199452"
+    },
+    {
+      "run_id": "run_716d1973ec",
+      "event": "model_call",
+      "payload": {
+        "context": {
+          "facts": {},
+          "memories": []
+        },
+        "input": "Find a plumber in Bellandur this week mornings under ₹1500",
+        "output": {
+          "service": "plumber",
+          "area": "Bellandur",
+          "time_window": "morning",
+          "date_range": "this week",
+          "budget": 1500
+        },
+        "token_usage": 16,
+        "context_tokens": 5,
+        "model_token_usage": null,
+        "latency_ms": 0.01,
+        "estimated_cost": null
+      },
+      "created_at": "2026-11-09T14:45:49.200482"
+    },
+    {
+      "run_id": "run_716d1973ec",
+      "event": "facts_updated",
+      "payload": {
+        "keys": [
+          "area",
+          "budget",
+          "date_range",
+          "service",
+          "time_window"
+        ]
+      },
+      "created_at": "2026-11-09T14:45:49.201039"
+    },
+    {
+      "run_id": "run_716d1973ec",
+      "event": "tool_call",
+      "payload": {
+        "tool": "search_providers",
+        "arguments": {
+          "service": "plumber",
+          "area": "Bellandur",
+          "date_range": "this week"
+        },
+        "result": [
+          {
+            "id": "p101",
+            "name": "Ravi Home Services",
+            "service": "plumber",
+            "price": 900,
+            "rating": 4.7,
+            "attributes": [
+              "verified",
+              "warranty"
+            ],
+            "area": "Bellandur",
+            "available_slots": [
+              "09:00",
+              "10:30",
+              "11:30",
+              "14:00",
+              "16:00",
+              "18:00"
+            ]
+          },
+          {
+            "id": "p102",
+            "name": "QuickFix Team",
+            "service": "plumber",
+            "price": 1200,
+            "rating": 4.5,
+            "attributes": [
+              "same-day"
+            ],
+            "area": "Bellandur",
+            "available_slots": [
+              "09:00",
+              "10:30",
+              "11:30",
+              "14:00",
+              "16:00",
+              "18:00"
+            ]
+          },
+          {
+            "id": "p103",
+            "name": "CityCare Services",
+            "service": "plumber",
+            "price": 1400,
+            "rating": 4.8,
+            "attributes": [
+              "verified"
+            ],
+            "area": "Bellandur",
+            "available_slots": [
+              "09:00",
+              "10:30",
+              "11:30",
+              "14:00",
+              "16:00",
+              "18:00"
+            ]
+          }
+        ],
+        "error": null,
+        "latency_ms": 0.01
+      },
+      "created_at": "2026-11-09T14:45:49.201151"
+    },
+    {
+      "run_id": "run_716d1973ec",
+      "event": "tool_call",
+      "payload": {
+        "tool": "hold_slot",
+        "arguments": {
+          "provider_id": "p103",
+          "slot": "09:00"
+        },
+        "result": {
+          "hold_id": "h_e4d66e2954",
+          "expires_at": "2026-11-09T14:55:49.201214+00:00",
+          "quoted_price": 1400
+        },
+        "error": null,
+        "latency_ms": 0.37
+      },
+      "created_at": "2026-11-09T14:45:49.201626"
+    },
+    {
+      "run_id": "run_716d1973ec",
+      "event": "state_transition",
+      "payload": {
+        "conversation_id": "c_6f4e1cd842",
+        "from": "collecting",
+        "to": "awaiting_approval",
+        "reason": "booking_approval_requested"
+      },
+      "created_at": "2026-11-09T14:45:49.202611"
+    },
+    {
+      "run_id": "run_716d1973ec",
+      "event": "approval_requested",
+      "payload": {
+        "approval_id": "ap_d4961fa55440",
+        "details": {
+          "provider_id": "p103",
+          "slot": "09:00",
+          "price": 1400,
+          "service": "plumber"
+        }
+      },
+      "created_at": "2026-11-09T14:45:49.202798"
+    },
+    {
+      "run_id": "run_19cfc4ac41",
+      "event": "state_loaded",
+      "payload": {
+        "conversation_id": "c_6f4e1cd842",
+        "state": "awaiting_approval"
+      },
+      "created_at": "2026-11-09T14:45:49.203133"
+    },
+    {
+      "run_id": "run_19cfc4ac41",
+      "event": "model_call",
+      "payload": {
+        "context": {
+          "facts": {
+            "service": "plumber",
+            "area": "Bellandur",
+            "date_range": "this week",
+            "time_window": "morning",
+            "budget": 1500
+          },
+          "memories": []
+        },
+        "input": "yes",
+        "output": {},
+        "token_usage": 18,
+        "context_tokens": 18,
+        "model_token_usage": null,
+        "latency_ms": 0.01,
+        "estimated_cost": null
+      },
+      "created_at": "2026-11-09T14:45:49.203599"
+    },
+    {
+      "run_id": "run_19cfc4ac41",
+      "event": "facts_updated",
+      "payload": {
+        "keys": [
+          "area",
+          "budget",
+          "date_range",
+          "pending_action",
+          "providers",
+          "service",
+          "time_window"
+        ]
+      },
+      "created_at": "2026-11-09T14:45:49.204110"
+    },
+    {
+      "run_id": "run_19cfc4ac41",
+      "event": "tool_call",
+      "payload": {
+        "tool": "book",
+        "arguments": {
+          "hold_id": "h_e4d66e2954",
+          "idempotency_key": "ap_d4961fa55440"
+        },
+        "result": null,
+        "error": "timeout_after_success",
+        "latency_ms": 0.46
+      },
+      "created_at": "2026-11-09T14:45:49.205716"
+    },
+    {
+      "run_id": "run_19cfc4ac41",
+      "event": "tool_call",
+      "payload": {
+        "tool": "get_booking_status",
+        "arguments": {
+          "hold_id": "h_e4d66e2954",
+          "idempotency_key": "ap_d4961fa55440"
+        },
+        "result": {
+          "status": "confirmed",
+          "booking_id": "b_f5d1b902cd",
+          "provider_id": "p103",
+          "slot": "09:00",
+          "price": 1400
+        },
+        "error": null,
+        "latency_ms": 0.09
+      },
+      "created_at": "2026-11-09T14:45:49.205904"
+    },
+    {
+      "run_id": "run_19cfc4ac41",
+      "event": "state_transition",
+      "payload": {
+        "conversation_id": "c_6f4e1cd842",
+        "from": "awaiting_approval",
+        "to": "booked",
+        "reason": "timeout_recovery_confirmed"
+      },
+      "created_at": "2026-11-09T14:45:49.206406"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+scenario,expected_result,actual_result,pass_fail,notes
+S01,Missing details and multi-message conversation,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S02,Correction preserves context,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S03,Provider comparison,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S04,Review prompt injection,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S05,Changed price invalidates approval,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S06,Changed slot invalidates approval,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S07,Changed provider invalidates approval,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S08,No booking without approval,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S09,Repeated confirmation,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S10,Timeout after success,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S11,Timeout without success,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S12,Slot conflict,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S13,Expired hold,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S14,Memory correction,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S15,Memory forgetting,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S16,Restart during approval,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S17,Proactive provider cancellation,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S18,Context budget and trace,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S19,Model turn limit,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S20,Tool call limit,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S21,Unexpected tool failure,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S22,Cancel transient failure and retry,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S23,Reschedule conflict,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S24,Duplicate prevention across restart,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S25,Forgotten and inferred memory excluded,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S26,Timeout result requires fresh approval before retry,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S27,Same provider reference resolves,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S28,Move to Saturday retains booking until approval,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S29,Fifty seeded memories and long history stay bounded,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S30,Non-confirmation text cannot approve,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S31,Existing SQLite database schema migrates,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S32,User can select a provider from comparison,behavioral assertions passed,PASS,Behavioral and invariant checks passed.
+S33,Unconfirmed inferred preference is stored but inactive,behavioral assertions passed,PASS,Behavioral and invariant checks passed.

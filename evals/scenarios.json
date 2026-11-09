@@ -1,0 +1,167 @@
+[
+  {
+    "id": "S01",
+    "name": "Missing details and multi-message conversation",
+    "expected": "Missing details and multi-message conversation"
+  },
+  {
+    "id": "S02",
+    "name": "Correction preserves context",
+    "expected": "Correction preserves context"
+  },
+  {
+    "id": "S03",
+    "name": "Provider comparison",
+    "expected": "Provider comparison"
+  },
+  {
+    "id": "S04",
+    "name": "Review prompt injection",
+    "expected": "Review prompt injection"
+  },
+  {
+    "id": "S05",
+    "name": "Changed price invalidates approval",
+    "expected": "Changed price invalidates approval"
+  },
+  {
+    "id": "S06",
+    "name": "Changed slot invalidates approval",
+    "expected": "Changed slot invalidates approval"
+  },
+  {
+    "id": "S07",
+    "name": "Changed provider invalidates approval",
+    "expected": "Changed provider invalidates approval"
+  },
+  {
+    "id": "S08",
+    "name": "No booking without approval",
+    "expected": "No booking without approval"
+  },
+  {
+    "id": "S09",
+    "name": "Repeated confirmation",
+    "expected": "Repeated confirmation"
+  },
+  {
+    "id": "S10",
+    "name": "Timeout after success",
+    "expected": "Timeout after success"
+  },
+  {
+    "id": "S11",
+    "name": "Timeout without success",
+    "expected": "Timeout without success"
+  },
+  {
+    "id": "S12",
+    "name": "Slot conflict",
+    "expected": "Slot conflict"
+  },
+  {
+    "id": "S13",
+    "name": "Expired hold",
+    "expected": "Expired hold"
+  },
+  {
+    "id": "S14",
+    "name": "Memory correction",
+    "expected": "Memory correction"
+  },
+  {
+    "id": "S15",
+    "name": "Memory forgetting",
+    "expected": "Memory forgetting"
+  },
+  {
+    "id": "S16",
+    "name": "Restart during approval",
+    "expected": "Restart during approval"
+  },
+  {
+    "id": "S17",
+    "name": "Proactive provider cancellation",
+    "expected": "Proactive provider cancellation"
+  },
+  {
+    "id": "S18",
+    "name": "Context budget and trace",
+    "expected": "Context budget and trace"
+  },
+  {
+    "id": "S19",
+    "name": "Model turn limit",
+    "expected": "Model turn limit"
+  },
+  {
+    "id": "S20",
+    "name": "Tool call limit",
+    "expected": "Tool call limit"
+  },
+  {
+    "id": "S21",
+    "name": "Unexpected tool failure",
+    "expected": "Unexpected tool failure"
+  },
+  {
+    "id": "S22",
+    "name": "Cancel transient failure and retry",
+    "expected": "Cancel transient failure and retry"
+  },
+  {
+    "id": "S23",
+    "name": "Reschedule conflict",
+    "expected": "Reschedule conflict"
+  },
+  {
+    "id": "S24",
+    "name": "Duplicate prevention across restart",
+    "expected": "Duplicate prevention across restart"
+  },
+  {
+    "id": "S25",
+    "name": "Forgotten and inferred memory excluded",
+    "expected": "Forgotten and inferred memory excluded"
+  },
+  {
+    "id": "S26",
+    "name": "Timeout result requires fresh approval before retry",
+    "expected": "Timeout result requires fresh approval before retry"
+  },
+  {
+    "id": "S27",
+    "name": "Same provider reference resolves",
+    "expected": "Same provider reference resolves"
+  },
+  {
+    "id": "S28",
+    "name": "Move to Saturday retains booking until approval",
+    "expected": "Move to Saturday retains booking until approval"
+  },
+  {
+    "id": "S29",
+    "name": "Fifty seeded memories and long history stay bounded",
+    "expected": "Fifty seeded memories and long history stay bounded"
+  },
+  {
+    "id": "S30",
+    "name": "Non-confirmation text cannot approve",
+    "expected": "Non-confirmation text cannot approve"
+  },
+  {
+    "id": "S31",
+    "name": "Existing SQLite database schema migrates",
+    "expected": "Existing SQLite database schema migrates"
+  },
+  {
+    "id": "S32",
+    "name": "User can select a provider from comparison",
+    "expected": "User can select a provider from comparison"
+  },
+  {
+    "id": "S33",
+    "name": "Unconfirmed inferred preference is stored but inactive",
+    "expected": "Unconfirmed inferred preference is stored but inactive"
+  }
+]

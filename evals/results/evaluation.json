@@ -1,0 +1,233 @@
+[
+  {
+    "scenario": "S01",
+    "expected_result": "Missing details and multi-message conversation",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S02",
+    "expected_result": "Correction preserves context",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S03",
+    "expected_result": "Provider comparison",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S04",
+    "expected_result": "Review prompt injection",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S05",
+    "expected_result": "Changed price invalidates approval",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S06",
+    "expected_result": "Changed slot invalidates approval",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S07",
+    "expected_result": "Changed provider invalidates approval",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S08",
+    "expected_result": "No booking without approval",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S09",
+    "expected_result": "Repeated confirmation",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S10",
+    "expected_result": "Timeout after success",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S11",
+    "expected_result": "Timeout without success",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S12",
+    "expected_result": "Slot conflict",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S13",
+    "expected_result": "Expired hold",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S14",
+    "expected_result": "Memory correction",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S15",
+    "expected_result": "Memory forgetting",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S16",
+    "expected_result": "Restart during approval",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S17",
+    "expected_result": "Proactive provider cancellation",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S18",
+    "expected_result": "Context budget and trace",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S19",
+    "expected_result": "Model turn limit",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S20",
+    "expected_result": "Tool call limit",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S21",
+    "expected_result": "Unexpected tool failure",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S22",
+    "expected_result": "Cancel transient failure and retry",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S23",
+    "expected_result": "Reschedule conflict",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S24",
+    "expected_result": "Duplicate prevention across restart",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S25",
+    "expected_result": "Forgotten and inferred memory excluded",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S26",
+    "expected_result": "Timeout result requires fresh approval before retry",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S27",
+    "expected_result": "Same provider reference resolves",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S28",
+    "expected_result": "Move to Saturday retains booking until approval",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S29",
+    "expected_result": "Fifty seeded memories and long history stay bounded",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S30",
+    "expected_result": "Non-confirmation text cannot approve",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S31",
+    "expected_result": "Existing SQLite database schema migrates",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S32",
+    "expected_result": "User can select a provider from comparison",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  },
+  {
+    "scenario": "S33",
+    "expected_result": "Unconfirmed inferred preference is stored but inactive",
+    "actual_result": "behavioral assertions passed",
+    "pass_fail": "PASS",
+    "notes": "Behavioral and invariant checks passed."
+  }
+]
